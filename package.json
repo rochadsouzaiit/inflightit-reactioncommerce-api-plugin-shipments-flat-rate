@@ -1,7 +1,7 @@
 {
-  "name": "@reactioncommerce/api-plugin-shipments-flat-rate",
+  "name": "@inflightit/api-plugin-shipments-flat-rate",
   "description": "Flat Rate Shipments plugin for the Reaction API",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "main": "index.js",
   "type": "module",
   "engines": {
@@ -12,7 +12,7 @@
   "email": "engineering@reactioncommerce.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reactioncommerce/api-plugin-shipments-flat-rate.git"
+    "url": "git+https://github.com/rochadsouzaiit/inflightit-reactioncommerce-api-plugin-shipments-flat-rate"
   },
   "author": {
     "name": "Reaction Commerce",
@@ -67,11 +67,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "prettier": {
     "arrowParens": "always"
