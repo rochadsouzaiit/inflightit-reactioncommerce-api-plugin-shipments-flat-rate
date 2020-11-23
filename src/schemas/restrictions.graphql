@@ -31,6 +31,19 @@ type DestinationRestrictions {
   region: [String]
 }
 
+type DayAvailability {
+  day: Int!
+  ranges: [String]!
+}
+
+type ScheduledRestrictions {
+  "Minimum holdup time in minutes (if isScheduledMethod is true)"
+  minHoldupTime: Int
+
+  "Available time to fulfill (if isScheduledMethod is true)"
+  availableTimeRange: [DayAvailability]
+}
+
 "Restriction type"
 enum RestrictionTypeEnum {
   "Allow"
@@ -80,25 +93,25 @@ extend type Query {
   "Get the full list of flat rate fulfillment method restrictions."
   getFlatRateFulfillmentRestrictions(
     "Shop to get restrictions for"
-    shopId: ID!,
+    shopId: ID!
 
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
-    after: ConnectionCursor,
+    after: ConnectionCursor
 
     "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
-    before: ConnectionCursor,
+    before: ConnectionCursor
 
     "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
-    first: ConnectionLimitInt,
+    first: ConnectionLimitInt
 
     "Return at most this many results. This parameter may be used with the `before` parameter."
-    last: ConnectionLimitInt,
+    last: ConnectionLimitInt
 
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
-    offset: Int,
+    offset: Int
 
     "Return results sorted in this order"
-    sortOrder: SortOrder = desc,
+    sortOrder: SortOrder = desc
 
     "By default, restrictions are sorted by when they were created, newest first. Set this to sort by one of the other allowed fields"
     sortBy: FlatRateFulfillmentRestrictionSortByField = createdAt
@@ -107,7 +120,7 @@ extend type Query {
   "Get a single flat rate fulfillment method restriction."
   getFlatRateFulfillmentRestriction(
     "The restriction ID"
-    restrictionId: ID!,
+    restrictionId: ID!
 
     "Shop that owns the restriction"
     shopId: ID!
@@ -159,6 +172,8 @@ type FlatRateFulfillmentRestriction implements Node {
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictions
 
+  schedule: ScheduledRestrictions
+
   "Method IDs to apply this restriction to. If none, applies to all methods as a universal restriction."
   methodIds: [ID]
 
@@ -183,6 +198,23 @@ extend type Mutation {
 }
 
 # Inputs
+
+input DayAvailabilityInput {
+  "Day number"
+  day: Int!
+
+  "Ranges when method is available (len is always even) "
+  ranges: [String]!
+}
+
+input ScheduledRestrictionsInput {
+  "Minimum holdup time in minutes (if isScheduledMethod is true)"
+  minHoldupTime: Int
+
+  "Available time to fulfill (if isScheduledMethod is true)"
+  availableTimeRange: [DayAvailabilityInput]
+}
+
 "Defines the input for a flat rate fulfillment method restriction."
 input FlatRateFulfillmentRestrictionInput {
   "Attribute restrictions. Multiple attribute restrictions are evaluated with AND. If both destination and attribute restrictions are present, they evaluate with AND."
@@ -191,6 +223,7 @@ input FlatRateFulfillmentRestrictionInput {
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictionsInput
 
+  schedule: ScheduledRestrictionsInput
   "Method IDs to apply this restriction to. If none, applies to all methods as a universal restriction."
   methodIds: [ID]
 
@@ -212,7 +245,6 @@ input CreateFlatRateFulfillmentRestrictionInput {
   shopId: ID!
 }
 
-
 # Payloads
 "Response from the `CreateFlatRateFulfillmentRestriction` mutation"
 type CreateFlatRateFulfillmentRestrictionPayload {
@@ -222,7 +254,6 @@ type CreateFlatRateFulfillmentRestrictionPayload {
   "The created flat rate fulfillment method restriction"
   restriction: FlatRateFulfillmentRestriction!
 }
-
 
 ####
 # Delete restriction mutation
@@ -257,7 +288,6 @@ type DeleteFlatRateFulfillmentRestrictionPayload {
   "The removed flat rate fulfillment method restriction"
   restriction: FlatRateFulfillmentRestriction!
 }
-
 
 ####
 # Update restriction mutation

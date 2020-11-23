@@ -25,37 +25,57 @@ export const Attributes = new SimpleSchema({
  * @property {String} postal optional
  */
 export const Destination = new SimpleSchema({
-  "country": {
+  country: {
     type: Array,
     optional: true
   },
   "country.$": String,
-  "region": {
+  region: {
     type: Array,
     optional: true
   },
   "region.$": String,
-  "postal": {
+  postal: {
     type: Array,
     optional: true
   },
   "postal.$": String
 });
 
+/**
+ * @name Schedule
+ * @memberof Schemas
+ * @type {SimpleSchema}
+ */
+export const Schedule = new SimpleSchema({
+  minHoldupTime: Number,
+
+  availableTimeRange: Array,
+
+  "availableTimeRange.$": Object,
+  "availableTimeRange.$.day": Number,
+  "availableTimeRange.$.ranges": Array,
+  "availableTimeRange.$.ranges.$": String
+});
+
 const restrictionSchema = new SimpleSchema({
-  "methodIds": {
+  methodIds: {
     type: Array,
     optional: true
   },
   "methodIds.$": String,
-  "type": String,
-  "attributes": {
+  type: String,
+  attributes: {
     type: Array,
     optional: true
   },
   "attributes.$": Attributes,
-  "destination": {
+  destination: {
     type: Destination,
+    optional: true
+  },
+  schedule: {
+    type: Schedule,
     optional: true
   }
 });
