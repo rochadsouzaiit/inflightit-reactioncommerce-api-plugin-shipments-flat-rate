@@ -17,9 +17,8 @@ export async function orderAttributeDenyCheck(
   // Get method specific attribute deny restrictions
 
   const attributesDenyRestrictions = methodRestrictions.filter(
-    (restriction) => {
+    (restriction) => 
       restriction.type === "deny" && Array.isArray(restriction.attributes);
-    }
   );
 
   if (attributesDenyRestrictions.length === 0) return true;
