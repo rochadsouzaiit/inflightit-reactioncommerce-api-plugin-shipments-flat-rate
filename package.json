@@ -1,7 +1,7 @@
 {
   "name": "@inflightit/api-plugin-shipments-flat-rate",
   "description": "Flat Rate Shipments plugin for the Reaction API",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "main": "index.js",
   "type": "module",
   "engines": {

@@ -172,7 +172,11 @@ type FlatRateFulfillmentRestriction implements Node {
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictions
 
+  "Schedule restrictions (between ranges)"
   schedule: ScheduledRestrictions
+  
+  "Allowed payment methods"
+  paymentMethods: [String]
 
   "Method IDs to apply this restriction to. If none, applies to all methods as a universal restriction."
   methodIds: [ID]
@@ -222,8 +226,13 @@ input FlatRateFulfillmentRestrictionInput {
 
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictionsInput
-
+  
+  "Schedule restrictions (between ranges)"
   schedule: ScheduledRestrictionsInput
+
+  "Allowed payment methods"
+  paymentMethods: [String]
+  
   "Method IDs to apply this restriction to. If none, applies to all methods as a universal restriction."
   methodIds: [ID]
 
