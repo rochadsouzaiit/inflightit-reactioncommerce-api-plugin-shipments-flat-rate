@@ -16,10 +16,8 @@ export async function orderAttributeDenyCheck(
 ) {
   // Get method specific attribute deny restrictions
 
-  const attributesDenyRestrictions = methodRestrictions.filter(
-    (restriction) =>
-      restriction.type === "deny" && Array.isArray(restriction.attributes)
-  );
+  const attributesDenyRestrictions = methodRestrictions.filter((restriction) =>
+    restriction.type === "deny" && Array.isArray(restriction.attributes));
 
   if (attributesDenyRestrictions.length === 0) return true;
 
@@ -36,7 +34,7 @@ export async function orderAttributeDenyCheck(
         objectPath.shift();
 
         // get property value with dot notation
-        const propertyValue = objectPath.reduce((a, b) => a[b], hydratedOrder);
+        const propertyValue = objectPath.reduce((obj, prop) => obj[prop], hydratedOrder);
         const attributeFound = operators[attribute.operator](
           propertyValue,
           propertyTypes[attribute.propertyType](attribute.value)

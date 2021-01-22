@@ -1,7 +1,7 @@
 import { attributeDenyCheck } from "./attributeDenyCheck.js";
-import { orderAttributeDenyCheck } from "./orderAttributeDenyCheck.js";
 import { locationAllowCheck } from "./locationAllowCheck.js";
 import { locationDenyCheck } from "./locationDenyCheck.js";
+import { shopMinAmountForDeliveryCheck } from "./shopMinAmountForDeliveryCheck.js";
 
 /**
  * @summary Filter shipping methods based on per method restrictions
@@ -61,15 +61,27 @@ export default async function filterShippingMethods(
         return awaitedValidShippingMethods;
       }
 
-      // Check method against attributes deny check
-      const methodIsAllowedBasedOnOrderAttributesDenyList = await orderAttributeDenyCheck(
-        methodRestrictions,
+      // Verify method against min order value
+      const methodIsAllowedBasedOnOrderTotalAmount = await shopMinAmountForDeliveryCheck(
+        context,
         method,
         hydratedOrder
       );
-      if (!methodIsAllowedBasedOnOrderAttributesDenyList) {
+      if (!methodIsAllowedBasedOnOrderTotalAmount) {
         return awaitedValidShippingMethods;
       }
+
+      // NOT USED SINCE MIN SHIPPING VALUE WENT TO SHOP SETTINGS
+      // *******************************************************
+      // Check method against attributes deny check
+      // const methodIsAllowedBasedOnOrderAttributesDenyList = await orderAttributeDenyCheck(
+      //   methodRestrictions,
+      //   method,
+      //   hydratedOrder
+      // );
+      // if (!methodIsAllowedBasedOnOrderAttributesDenyList) {
+      //   return awaitedValidShippingMethods;
+      // }
 
       // If method passes all checks, it is valid and should be added to valid methods array
       awaitedValidShippingMethods.push(method);
