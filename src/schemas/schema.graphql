@@ -1,6 +1,58 @@
 ####
+# Extend Shop Settings
+####
+
+"Shipping options Input"
+input ShippingOptionsInput {
+  "Minimum amount for delivery"
+  minAmountForDelivery: Float
+}
+
+"Shipping options"
+type ShippingOptions {
+  "Minimum amount for delivery"
+  minAmountForDelivery: Float
+}
+
+extend type ShopSettings {
+  """
+  If `false` no defined shipping rates will be used when fulfillment
+  quotes are requested for a cart or order. A quick way to disable the entire
+  `reaction-shipping-rates` plugin temporarily.
+  """
+  isShippingRatesFulfillmentEnabled: Boolean
+
+   """
+  All shop options relative to shipping
+  """
+  shippingOptions: ShippingOptions
+}
+
+extend input ShopSettingsUpdates {
+  """
+  Set to `false` to prevent any defined shipping rates from being used when fulfillment
+  quotes are requested for a cart or order. A quick way to disable the entire
+  `reaction-shipping-rates` plugin temporarily.
+  """
+  isShippingRatesFulfillmentEnabled: Boolean
+
+  """
+  All shop options relative to shipping
+  """
+  shippingOptions: ShippingOptionsInput
+}
+
+####
 # Base
 ####
+
+
+"Shop Shipping Settikngs"
+type ShopShippingOptions {
+  "Minimum amount for delivery"
+  minAmountForDelivery: Float
+}
+
 
 extend type Query {
   "Get a flat rate fulfillment method"
@@ -32,6 +84,11 @@ extend type Query {
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
     offset: Int,
   ): FlatRateFulfillmentMethodConnection!
+
+  getMinAmountForFlatRateFulfillmentMethod(
+    "Shop ID"
+    shopId: ID!
+  ): ShopShippingOptions
 }
 
 extend type Mutation {
@@ -228,22 +285,4 @@ type FlatRateFulfillmentMethodConnection {
 
   "The total number of nodes that match your query"
   totalCount: Int!
-}
-
-extend type ShopSettings {
-  """
-  If `false` no defined shipping rates will be used when fulfillment
-  quotes are requested for a cart or order. A quick way to disable the entire
-  `reaction-shipping-rates` plugin temporarily.
-  """
-  isShippingRatesFulfillmentEnabled: Boolean
-}
-
-extend input ShopSettingsUpdates {
-  """
-  Set to `false` to prevent any defined shipping rates from being used when fulfillment
-  quotes are requested for a cart or order. A quick way to disable the entire
-  `reaction-shipping-rates` plugin temporarily.
-  """
-  isShippingRatesFulfillmentEnabled: Boolean
 }
