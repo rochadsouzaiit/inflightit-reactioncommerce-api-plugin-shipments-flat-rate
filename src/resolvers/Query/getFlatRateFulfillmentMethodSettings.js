@@ -10,10 +10,10 @@ import { decodeShopOpaqueId } from "../../xforms/id.js";
  * @param {Object} context - an object containing the per-request state
  * @returns {Promise<Object>} The global settings object
  */
-export default async function getMinAmountForFlatRateFulfillmentMethod(_, args, context) {
+export default async function getFlatRateFulfillmentMethodSettings(_, args, context) {
   const { shopId } = args;
 
   const internalShopId = decodeShopOpaqueId(shopId);
 
-  return context.queries.getMinAmountForFlatRateFulfillmentMethod(context, internalShopId);
+  return context.queries.getFlatRateFulfillmentMethodSettings(context, internalShopId);
 }

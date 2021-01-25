@@ -6,7 +6,7 @@ import { getShopShippingSettings } from "../util/shopShippingSettings.js";
  * @param {String} [shopId] Shop ID. Pass `null` for global settings.
  * @returns {Promise<Object>} App settings for a shop or global app settings
  */
-export default async function getMinAmountForFlatRateFulfillmentMethod(context, shopId = null) {
+export default async function getFlatRateFulfillmentMethodSettings(context, shopId = null) {
   const { collections } = context;
   const { AppSettings } = collections;
 

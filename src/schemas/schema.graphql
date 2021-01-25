@@ -106,7 +106,7 @@ extend type Query {
     offset: Int,
   ): FlatRateFulfillmentMethodConnection!
 
-  getMinAmountForFlatRateFulfillmentMethod(
+  getFlatRateFulfillmentMethodSettings(
     "Shop ID"
     shopId: ID!
   ): ShopShippingOptions
