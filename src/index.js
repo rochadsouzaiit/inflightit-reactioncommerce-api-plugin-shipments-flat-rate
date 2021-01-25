@@ -6,6 +6,7 @@ import mutations from "./mutations/index.js";
 import policies from "./policies.json";
 import queries from "./queries/index.js";
 import schemas from "./schemas/index.js";
+import { ShippingOptions } from "./simpleSchemas.js";
 
 /**
  * @summary Import and call this function to add this plugin to your API.
@@ -51,6 +52,12 @@ export default async function register(app) {
         permissionsThatCanEdit: ["reaction:legacy:shippingMethods/update:settings"],
         simpleSchema: {
           type: Boolean
+        }
+      },
+      shippingOptions: {
+        permissionsThatCanEdit: ["reaction:legacy:shipping-rates/update:settings"],
+        simpleSchema: {
+          type: ShippingOptions
         }
       }
     }
