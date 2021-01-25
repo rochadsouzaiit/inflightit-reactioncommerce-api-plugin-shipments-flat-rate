@@ -6,12 +6,30 @@
 input ShippingOptionsInput {
   "Minimum amount for delivery"
   minAmountForDelivery: Float
+
+  "Free delivery from amount"
+  minAmoutForFreeDelivery: Float
+
+  "Shop physical location - latitude"
+  latitude: Float
+  
+  "Shop physical location - longitude"
+  longitude: Float
 }
 
 "Shipping options"
 type ShippingOptions {
   "Minimum amount for delivery"
   minAmountForDelivery: Float
+
+  "Free delivery from amount"
+  minAmoutForFreeDelivery: Float
+
+  "Shop physical location - latitude"
+  latitude: Float
+  
+  "Shop physical location - longitude"
+  longitude: Float
 }
 
 extend type ShopSettings {
@@ -51,6 +69,9 @@ extend input ShopSettingsUpdates {
 type ShopShippingOptions {
   "Minimum amount for delivery"
   minAmountForDelivery: Float
+
+  "Free delivery from amount"
+  minAmoutForFreeDelivery: Float
 }
 
 

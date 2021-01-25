@@ -6,6 +6,10 @@
 export function getShopShippingSettings(settings) {
   const { shippingOptions } = settings;
 
+  // not allow to return GPS coordinates
+  delete shippingOptions.longitude;
+  delete shippingOptions.latitude;
+
   return shippingOptions;
 }
 

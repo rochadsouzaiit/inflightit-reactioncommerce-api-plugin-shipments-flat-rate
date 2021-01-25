@@ -2,6 +2,7 @@ import { attributeDenyCheck } from "./attributeDenyCheck.js";
 import { locationAllowCheck } from "./locationAllowCheck.js";
 import { locationDenyCheck } from "./locationDenyCheck.js";
 import { shopMinAmountForDeliveryCheck } from "./shopMinAmountForDeliveryCheck.js";
+import { ordeQualifiedForFreeDeliveryCheck, resetDeliveryMethodRate } from "./freeDeliveryCheck.js";
 
 /**
  * @summary Filter shipping methods based on per method restrictions
@@ -18,8 +19,9 @@ export default async function filterShippingMethods(
   const { FlatRateFulfillmentRestrictions } = context.collections;
 
   const allValidShippingMethods = methods.reduce(
-    async (validShippingMethods, method) => {
+    async (validShippingMethods, currentMethod) => {
       const awaitedValidShippingMethods = await validShippingMethods;
+      let method = currentMethod;
 
       // If method is not enabled, it is not valid
       if (!method.enabled) {
@@ -71,6 +73,7 @@ export default async function filterShippingMethods(
         return awaitedValidShippingMethods;
       }
 
+      // *******************************************************
       // NOT USED SINCE MIN SHIPPING VALUE WENT TO SHOP SETTINGS
       // *******************************************************
       // Check method against attributes deny check
@@ -82,6 +85,15 @@ export default async function filterShippingMethods(
       // if (!methodIsAllowedBasedOnOrderAttributesDenyList) {
       //   return awaitedValidShippingMethods;
       // }
+
+      // If method passes all filter, it should be checked if is qualified for free delivery
+      const orderIsQualifiedForFreeDeliveryMethod = await ordeQualifiedForFreeDeliveryCheck(
+        context,
+        method,
+        hydratedOrder
+      );
+      if (orderIsQualifiedForFreeDeliveryMethod) method = resetDeliveryMethodRate(method);
+
 
       // If method passes all checks, it is valid and should be added to valid methods array
       awaitedValidShippingMethods.push(method);
