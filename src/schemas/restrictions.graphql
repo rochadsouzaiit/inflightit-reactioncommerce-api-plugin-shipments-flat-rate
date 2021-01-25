@@ -172,6 +172,9 @@ type FlatRateFulfillmentRestriction implements Node {
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictions
 
+  "Distance restriction, based on ray in killometers"
+  distance: Int
+
   "Schedule restrictions (between ranges)"
   schedule: ScheduledRestrictions
   
@@ -227,6 +230,9 @@ input FlatRateFulfillmentRestrictionInput {
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictionsInput
   
+  "Distance restriction, based on ray in killometers"
+  distance: Int
+
   "Schedule restrictions (between ranges)"
   schedule: ScheduledRestrictionsInput
 
