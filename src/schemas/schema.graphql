@@ -72,6 +72,9 @@ type ShopShippingOptions {
 
   "Free delivery from amount"
   minAmoutForFreeDelivery: Float
+
+  "Max distance for instant delivery"
+  maxInstantDeliveryDistance: Float
 }
 
 
