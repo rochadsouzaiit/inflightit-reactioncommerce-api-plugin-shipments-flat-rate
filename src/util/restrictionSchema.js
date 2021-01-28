@@ -43,6 +43,24 @@ export const Destination = new SimpleSchema({
 });
 
 /**
+ * @name Delivery
+ * @memberof Schemas
+ * @type {SimpleSchema}
+ * @property {Number} distance
+ * @property {Number} rate
+ */
+export const Delivery = new SimpleSchema({
+  distance: {
+    type: Number,
+    optional: false
+  },
+  rate: {
+    type: Number,
+    optional: false
+  }
+});
+
+/**
  * @name Schedule
  * @memberof Schemas
  * @type {SimpleSchema}
@@ -59,30 +77,34 @@ export const Schedule = new SimpleSchema({
 });
 
 const restrictionSchema = new SimpleSchema({
-  "methodIds": {
+  methodIds: {
     type: Array,
     optional: true
   },
   "methodIds.$": String,
-  "type": String,
-  "attributes": {
+  type: String,
+  attributes: {
     type: Array,
     optional: true
   },
   "attributes.$": Attributes,
-  "destination": {
+  destination: {
     type: Destination,
     optional: true
   },
-  "schedule": {
+  schedule: {
     type: Schedule,
     optional: true
   },
-  "paymentMethods": {
+  paymentMethods: {
     type: Array,
     optional: true
   },
-  "paymentMethods.$": String
+  "paymentMethods.$": String,
+  delivery: {
+    type: Delivery,
+    optional: true
+  }
 });
 
 export default restrictionSchema;

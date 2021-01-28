@@ -5,6 +5,7 @@
  */
 export function getShopShippingSettings(settings) {
   const { shippingOptions } = settings;
+  if (!shippingOptions) return {};
 
   // not allow to return GPS coordinates
   delete shippingOptions.longitude;

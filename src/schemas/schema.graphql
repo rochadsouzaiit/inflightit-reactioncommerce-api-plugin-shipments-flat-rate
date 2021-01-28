@@ -9,12 +9,6 @@ input ShippingOptionsInput {
 
   "Free delivery from amount"
   minAmoutForFreeDelivery: Float
-
-  "Shop physical location - latitude"
-  latitude: Float
-  
-  "Shop physical location - longitude"
-  longitude: Float
 }
 
 "Shipping options"
@@ -24,12 +18,6 @@ type ShippingOptions {
 
   "Free delivery from amount"
   minAmoutForFreeDelivery: Float
-
-  "Shop physical location - latitude"
-  latitude: Float
-  
-  "Shop physical location - longitude"
-  longitude: Float
 }
 
 extend type ShopSettings {
@@ -44,6 +32,12 @@ extend type ShopSettings {
   All shop options relative to shipping
   """
   shippingOptions: ShippingOptions
+
+   "Shop physical location - latitude"
+  latitude: Float
+  
+  "Shop physical location - longitude"
+  longitude: Float
 }
 
 extend input ShopSettingsUpdates {
@@ -58,6 +52,12 @@ extend input ShopSettingsUpdates {
   All shop options relative to shipping
   """
   shippingOptions: ShippingOptionsInput
+
+   "Shop physical location - latitude"
+  latitude: Float
+  
+  "Shop physical location - longitude"
+  longitude: Float
 }
 
 ####

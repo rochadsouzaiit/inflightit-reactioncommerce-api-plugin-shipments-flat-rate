@@ -22,9 +22,7 @@ export default async function register(app) {
     collections: {
       FlatRateFulfillmentRestrictions: {
         name: "FlatRateFulfillmentRestrictions",
-        indexes: [
-          [{ methodIds: 1 }]
-        ]
+        indexes: [[{ methodIds: 1 }]]
       },
       Shipping: {
         name: "Shipping",
@@ -49,15 +47,35 @@ export default async function register(app) {
     shopSettingsConfig: {
       isShippingRatesFulfillmentEnabled: {
         defaultValue: true,
-        permissionsThatCanEdit: ["reaction:legacy:shippingMethods/update:settings"],
+        permissionsThatCanEdit: [
+          "reaction:legacy:shippingMethods/update:settings"
+        ],
         simpleSchema: {
           type: Boolean
         }
       },
       shippingOptions: {
-        permissionsThatCanEdit: ["reaction:legacy:shipping-rates/update:settings"],
+        permissionsThatCanEdit: [
+          "reaction:legacy:shipping-rates/update:settings"
+        ],
         simpleSchema: {
           type: ShippingOptions
+        }
+      },
+      latitude: {
+        permissionsThatCanEdit: [
+          "reaction:legacy:shipping-rates/update:settings"
+        ],
+        simpleSchema: {
+          type: Number
+        }
+      },
+      longitude: {
+        permissionsThatCanEdit: [
+          "reaction:legacy:shipping-rates/update:settings"
+        ],
+        simpleSchema: {
+          type: Number
         }
       }
     }

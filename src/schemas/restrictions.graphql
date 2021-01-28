@@ -31,6 +31,17 @@ type DestinationRestrictions {
   region: [String]
 }
 
+"""
+Delivery restrictons. Actually this rules that change the price taking into account distance
+"""
+type DeliveryRestrictions {
+  "Distance from store to destiny"
+  distance: Float!
+
+  "Price for the rage defined above"
+  rate: Float!
+}
+
 type DayAvailability {
   day: Int!
   ranges: [String]!
@@ -84,6 +95,17 @@ input DestinationRestrictionsInput {
 
   "Restrict for any of these destination regions"
   region: [String]
+}
+
+"""
+Input for delivery restrictons. Actually this rules that change the price taking into account distance
+"""
+input DeliveryRestrictionsInput {
+  "Distance from store to destiny"
+  distance: Float!
+
+  "Price for the rage defined above"
+  rate: Float!
 }
 
 ####
@@ -173,7 +195,7 @@ type FlatRateFulfillmentRestriction implements Node {
   destination: DestinationRestrictions
 
   "Distance restriction, based on ray in killometers"
-  distance: Int
+  delivery: DeliveryRestrictions
 
   "Schedule restrictions (between ranges)"
   schedule: ScheduledRestrictions
@@ -230,8 +252,8 @@ input FlatRateFulfillmentRestrictionInput {
   "Destination restrictions. If multiple destination restrictions are present, the most localized is the only one evaluated (i.e. evaluate postal if present, then region if present, then country). If both destination and attribute restrictions are present, they evaluate with AND."
   destination: DestinationRestrictionsInput
   
-  "Distance restriction, based on ray in killometers"
-  distance: Int
+  "Delivery restrictions"
+  delivery: DeliveryRestrictionsInput
 
   "Schedule restrictions (between ranges)"
   schedule: ScheduledRestrictionsInput

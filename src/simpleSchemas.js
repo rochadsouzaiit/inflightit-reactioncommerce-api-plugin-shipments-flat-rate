@@ -18,14 +18,6 @@ export const ShippingOptions = new SimpleSchema({
   minAmoutForFreeDelivery: {
     type: Number,
     optional: true
-  },
-  latitude: {
-    type: Number,
-    optional: true
-  },
-  longitude: {
-    type: Number,
-    optional: true
   }
 });
 
