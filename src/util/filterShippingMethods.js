@@ -3,6 +3,7 @@ import { locationAllowCheck } from "./locationAllowCheck.js";
 import { locationDenyCheck } from "./locationDenyCheck.js";
 import { shopMinAmountForDeliveryCheck } from "./shopMinAmountForDeliveryCheck.js";
 import { ordeQualifiedForFreeDeliveryCheck, resetDeliveryMethodRate } from "./freeDeliveryCheck.js";
+import { isInstantDeliveryRateCheck, getInstantDeliveryRateCheck, setInstantDeliveryMethodRate } from "./instantDeliveryCheck.js";
 
 /**
  * @summary Filter shipping methods based on per method restrictions
@@ -86,6 +87,21 @@ export default async function filterShippingMethods(
       //   return awaitedValidShippingMethods;
       // }
 
+
+      // If is a "instant" delivery method, check if inside bounds and rate
+      if (isInstantDeliveryRateCheck(methodRestrictions)) {
+        const instantDeliveryRate = await getInstantDeliveryRateCheck(
+          context,
+          methodRestrictions,
+          method,
+          hydratedOrder
+        );
+
+        if (instantDeliveryRate !== null) method = setInstantDeliveryMethodRate(method, instantDeliveryRate);
+        else return awaitedValidShippingMethods;
+      }
+
+
       // If method passes all filter, it should be checked if is qualified for free delivery
       const orderIsQualifiedForFreeDeliveryMethod = await ordeQualifiedForFreeDeliveryCheck(
         context,
@@ -93,7 +109,6 @@ export default async function filterShippingMethods(
         hydratedOrder
       );
       if (orderIsQualifiedForFreeDeliveryMethod) method = resetDeliveryMethodRate(method);
-
 
       // If method passes all checks, it is valid and should be added to valid methods array
       awaitedValidShippingMethods.push(method);
