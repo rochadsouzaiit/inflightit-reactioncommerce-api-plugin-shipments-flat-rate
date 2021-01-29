@@ -1,13 +1,13 @@
 
 
 /**
- * @summary Check if order is qualified for free delivery
+ * @summary Check if order is qualified for free shipping
  * @param {Object} context - an object containing the per-request state
  * @param {Object} method - current method to check restrictions against
  * @param {Object} hydratedOrder - hydrated order for current order
  * @returns {Bool} true / false as to whether method is still valid after this check
  */
-export async function ordeQualifiedForFreeDeliveryCheck(
+export async function ordeQualifiedForFreeShippingCheck(
   context,
   method,
   hydratedOrder
@@ -19,14 +19,12 @@ export async function ordeQualifiedForFreeDeliveryCheck(
 
   const settings = (await AppSettings.findOne({ shopId: hydratedOrder.shopId })) || {};
 
-  const minAmoutForFreeDelivery = settings.shippingOptions && settings.shippingOptions.minAmoutForFreeDelivery;
-  if (!minAmoutForFreeDelivery) return false;
+  const minAmoutForFreeShipping = settings.shippingOptions && settings.shippingOptions.minAmoutForFreeShipping;
+  if (!minAmoutForFreeShipping) return false;
 
 
-  if (method.fulfillmentTypes && method.fulfillmentTypes.includes("shipping")) {
-    const { amount } = hydratedOrder.totals.orderTotal;
-    if (amount >= minAmoutForFreeDelivery) isFree = true;
-  }
+  const { amount } = hydratedOrder.totals.orderTotal;
+  if (amount >= minAmoutForFreeShipping) isFree = true;
 
   return isFree;
 }
@@ -36,7 +34,7 @@ export async function ordeQualifiedForFreeDeliveryCheck(
  * @param {Object} method - current method to check restrictions against
  * @returns {Object} method - with the rate as 0
  */
-export function resetDeliveryMethodRate(method) {
+export function resetShippingMethodRate(method) {
   if (!method) return method;
 
   const updatedMethod = { ...method };

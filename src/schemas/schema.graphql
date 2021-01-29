@@ -5,19 +5,19 @@
 "Shipping options Input"
 input ShippingOptionsInput {
   "Minimum amount for delivery"
-  minAmountForDelivery: Float
+  minAmountForShipping: Float
 
   "Free delivery from amount"
-  minAmoutForFreeDelivery: Float
+  minAmoutForFreeShipping: Float
 }
 
 "Shipping options"
 type ShippingOptions {
   "Minimum amount for delivery"
-  minAmountForDelivery: Float
+  minAmountForShipping: Float
 
   "Free delivery from amount"
-  minAmoutForFreeDelivery: Float
+  minAmoutForFreeShipping: Float
 }
 
 extend type ShopSettings {
@@ -68,10 +68,10 @@ extend input ShopSettingsUpdates {
 "Shop Shipping Settikngs"
 type ShopShippingOptions {
   "Minimum amount for delivery"
-  minAmountForDelivery: Float
+  minAmountForShipping: Float
 
   "Free delivery from amount"
-  minAmoutForFreeDelivery: Float
+  minAmoutForFreeShipping: Float
 
   "Max distance for instant delivery"
   maxInstantDeliveryDistance: Float

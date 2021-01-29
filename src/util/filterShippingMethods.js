@@ -1,8 +1,8 @@
 import { attributeDenyCheck } from "./attributeDenyCheck.js";
 import { locationAllowCheck } from "./locationAllowCheck.js";
 import { locationDenyCheck } from "./locationDenyCheck.js";
-import { shopMinAmountForDeliveryCheck } from "./shopMinAmountForDeliveryCheck.js";
-import { ordeQualifiedForFreeDeliveryCheck, resetDeliveryMethodRate } from "./freeDeliveryCheck.js";
+import { minAmountForShippingCheck } from "./minAmountForShippingCheck.js";
+import { ordeQualifiedForFreeShippingCheck, resetShippingMethodRate } from "./freeShippingCheck.js";
 import { isInstantDeliveryRateCheck, getInstantDeliveryRateCheck, setInstantDeliveryMethodRate } from "./instantDeliveryCheck.js";
 
 /**
@@ -65,7 +65,7 @@ export default async function filterShippingMethods(
       }
 
       // Verify method against min order value
-      const methodIsAllowedBasedOnOrderTotalAmount = await shopMinAmountForDeliveryCheck(
+      const methodIsAllowedBasedOnOrderTotalAmount = await minAmountForShippingCheck(
         context,
         method,
         hydratedOrder
@@ -102,13 +102,13 @@ export default async function filterShippingMethods(
       }
 
 
-      // If method passes all filter, it should be checked if is qualified for free delivery
-      const orderIsQualifiedForFreeDeliveryMethod = await ordeQualifiedForFreeDeliveryCheck(
+      // If method passes all filter, it should be checked if is qualified for free shipping
+      const orderIsQualifiedForFreeShippingMethod = await ordeQualifiedForFreeShippingCheck(
         context,
         method,
         hydratedOrder
       );
-      if (orderIsQualifiedForFreeDeliveryMethod) method = resetDeliveryMethodRate(method);
+      if (orderIsQualifiedForFreeShippingMethod) method = resetShippingMethodRate(method);
 
       // If method passes all checks, it is valid and should be added to valid methods array
       awaitedValidShippingMethods.push(method);

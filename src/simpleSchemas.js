@@ -5,17 +5,17 @@ import SimpleSchema from "simpl-schema";
  * @memberof Schemas
  * @type {SimpleSchema}
  * @summary Shop shipping options
- * @property {Numver} minAmountForDelivery
- * @property {Numver} minAmoutForFreeDelivery
+ * @property {Numver} minAmountForShipping
+ * @property {Numver} minAmoutForFreeShipping
  * @property {Numver} latitude
  * @property {Numver} longitude
  */
 export const ShippingOptions = new SimpleSchema({
-  minAmountForDelivery: {
+  minAmountForShipping: {
     type: Number,
     optional: true
   },
-  minAmoutForFreeDelivery: {
+  minAmoutForFreeShipping: {
     type: Number,
     optional: true
   }

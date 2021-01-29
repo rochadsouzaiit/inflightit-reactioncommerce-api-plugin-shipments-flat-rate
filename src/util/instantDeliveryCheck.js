@@ -32,19 +32,20 @@ export async function getInstantDeliveryRateCheck(
   method,
   hydratedOrder
 ) {
-  // If there is no rules, something when wrong
-  const instantDeliveryRules = methodRestrictions.filter((mr) => !!mr.delivery);
-  if (!instantDeliveryRules.length) throw new Error("There is no instant delivery rules");
-
-  const { collections } = context;
-  const { AppSettings } = collections;
-
-
-  const { latitude, longitude } = (await AppSettings.findOne({ shopId: hydratedOrder.shopId })) || {};
-  // If there is no Shop location, return
-  if (!latitude || !longitude) throw new Error(`Store has no location defined: ${hydratedOrder.shopId}`);
-
   try {
+    // If there is no rules, something when wrong
+    const instantDeliveryRules = methodRestrictions.filter((mr) => !!mr.delivery);
+    if (!instantDeliveryRules.length) throw new Error("There is no instant delivery rules");
+
+    const { collections } = context;
+    const { AppSettings } = collections;
+
+
+    const { latitude, longitude } = (await AppSettings.findOne({ shopId: hydratedOrder.shopId })) || {};
+    // If there is no Shop location, return
+    if (!latitude || !longitude) throw new Error(`Store has no location defined: ${hydratedOrder.shopId}`);
+
+
     const {
       shippingAddress: { address1, address2, city, postal, region }
     } = hydratedOrder;

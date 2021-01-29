@@ -7,7 +7,7 @@
  * @param {Object} hydratedOrder - hydrated order for current order
  * @returns {Bool} true / false as to whether method is still valid after this check
  */
-export async function shopMinAmountForDeliveryCheck(
+export async function minAmountForShippingCheck(
   context,
   method,
   hydratedOrder
@@ -19,14 +19,11 @@ export async function shopMinAmountForDeliveryCheck(
 
   const settings = (await AppSettings.findOne({ shopId: hydratedOrder.shopId })) || {};
 
-  const shopMinAmountForDelivery = settings.shippingOptions && settings.shippingOptions.minAmountForDelivery;
-  if (!shopMinAmountForDelivery) return !isRestricted;
+  const shopMinAmountForShipping = settings.shippingOptions && settings.shippingOptions.minAmountForShipping;
+  if (!shopMinAmountForShipping) return !isRestricted;
 
-
-  if (method.fulfillmentTypes && method.fulfillmentTypes.includes("shipping")) {
-    const { amount } = hydratedOrder.totals.orderTotal;
-    if (amount < shopMinAmountForDelivery) isRestricted = true;
-  }
+  const { amount } = hydratedOrder.totals.orderTotal;
+  if (amount < shopMinAmountForShipping) isRestricted = true;
 
   return !isRestricted;
 }
