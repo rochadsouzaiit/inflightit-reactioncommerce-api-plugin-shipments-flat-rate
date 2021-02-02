@@ -17,7 +17,7 @@ export function isInstantDeliveryRateCheck(methodRestrictions = []) {
 }
 
 const MAPS_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-
+const OUT_OF_BOUNDS_VALUE = 999;
 /**
  * @summary get instant delivery rate
  * @param {Object} context - an object containing the per-request state
@@ -77,7 +77,7 @@ export async function getInstantDeliveryRateCheck(
 
       // if out of bounds, returns
       const { delivery } = rulesSortedDescByDistance[0];
-      if (delivery.distance < deliveryLocationDistanceInKms) throw new Error(`Delivery location out of bounds: ${hydratedOrder.shopId}`);
+      if (delivery.distance < deliveryLocationDistanceInKms) return OUT_OF_BOUNDS_VALUE;
 
       // Select rules
       let selectedRule = null;
