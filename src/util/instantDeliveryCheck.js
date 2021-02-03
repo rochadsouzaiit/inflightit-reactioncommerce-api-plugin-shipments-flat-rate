@@ -17,7 +17,7 @@ export function isInstantDeliveryRateCheck(methodRestrictions = []) {
 }
 
 const MAPS_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-const OUT_OF_BOUNDS_VALUE = 999;
+export const OUT_OF_BOUNDS_VALUE = 999;
 /**
  * @summary get instant delivery rate
  * @param {Object} context - an object containing the per-request state

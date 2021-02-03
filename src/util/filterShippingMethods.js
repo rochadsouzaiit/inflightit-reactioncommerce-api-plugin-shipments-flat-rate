@@ -3,7 +3,8 @@ import { locationAllowCheck } from "./locationAllowCheck.js";
 import { locationDenyCheck } from "./locationDenyCheck.js";
 import { minAmountForShippingCheck } from "./minAmountForShippingCheck.js";
 import { ordeQualifiedForFreeShippingCheck, resetShippingMethodRate } from "./freeShippingCheck.js";
-import { isInstantDeliveryRateCheck, getInstantDeliveryRateCheck, setInstantDeliveryMethodRate } from "./instantDeliveryCheck.js";
+import { isInstantDeliveryRateCheck, getInstantDeliveryRateCheck,
+  setInstantDeliveryMethodRate, OUT_OF_BOUNDS_VALUE } from "./instantDeliveryCheck.js";
 
 /**
  * @summary Filter shipping methods based on per method restrictions
@@ -97,8 +98,15 @@ export default async function filterShippingMethods(
           hydratedOrder
         );
 
-        if (instantDeliveryRate !== null) method = setInstantDeliveryMethodRate(method, instantDeliveryRate);
-        else return awaitedValidShippingMethods;
+        if (instantDeliveryRate !== null) {
+          method = setInstantDeliveryMethodRate(method, instantDeliveryRate);
+
+          // TODO: (Refactor) prevent to be reset by "qualified free shipping"
+          if (instantDeliveryRate === OUT_OF_BOUNDS_VALUE) {
+            awaitedValidShippingMethods.push(method);
+            return awaitedValidShippingMethods;
+          }
+        } else return awaitedValidShippingMethods;
       }
 
 
